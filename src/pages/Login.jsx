@@ -19,19 +19,20 @@
 //       setErr(true);
 //     }
 //   };
+
 //   return (
 //     <div className="formContainer">
 //       <div className="formWrapper">
 //         <strong className="logo">React Chat</strong>
 //         <span className="title">Login</span>
 //         <form onSubmit={handleSubmit}>
-//           <input type="email" placeholder="email" />
-//           <input type="password" placeholder="password" />
+//           <input type="email" placeholder="Email" />
+//           <input type="password" placeholder="Password" />
 //           <button>Sign in</button>
 //           {err && <span>Something went wrong</span>}
 //         </form>
 //         <p className="form-link">
-//           You don't have an account?{" "}
+//           Don't have an account?{" "}
 //           <Link className="link" to="/register">
 //             Register
 //           </Link>
@@ -42,14 +43,13 @@
 // };
 
 // export default Login;
-
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
 const Login = () => {
-  const [err, setErr] = useState(false);
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -61,7 +61,24 @@ const Login = () => {
       await signInWithEmailAndPassword(auth, email, password);
       navigate("/");
     } catch (err) {
-      setErr(true);
+      console.log(err);
+      handleFirebaseError(err);
+    }
+  };
+
+  const handleFirebaseError = (error) => {
+    switch (error.code) {
+      case "auth/user-not-found":
+        setError("No user found with this email.");
+        break;
+      case "auth/wrong-password":
+        setError("Incorrect password.");
+        break;
+      case "auth/invalid-email":
+        setError("Invalid email address.");
+        break;
+      default:
+        setError("Something went wrong. Please try again.");
     }
   };
 
@@ -74,7 +91,7 @@ const Login = () => {
           <input type="email" placeholder="Email" />
           <input type="password" placeholder="Password" />
           <button>Sign in</button>
-          {err && <span>Something went wrong</span>}
+          {error && <span className="error-message">{error}</span>}
         </form>
         <p className="form-link">
           Don't have an account?{" "}
