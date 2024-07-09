@@ -50,6 +50,8 @@ import { BsFillCameraVideoFill } from "react-icons/bs";
 import { MdPersonAddAlt1 } from "react-icons/md";
 import { IoIosMore } from "react-icons/io";
 
+import { GiNightSleep } from "react-icons/gi";
+
 const Chat = () => {
   const { data } = useContext(ChatContext);
   console.log(data);
@@ -76,7 +78,10 @@ const Chat = () => {
         </div>
       </div>
       {data.chatId === null ? (
-        <div className="noChatId">Select a chat to start messaging</div>
+        <div className="noChatWrapper">
+          <h1 className="noChatId">Select a chat to start messaging</h1>
+          <GiNightSleep size={150} />
+        </div>
       ) : (
         <>
           <Messages />

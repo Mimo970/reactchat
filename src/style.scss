@@ -229,8 +229,8 @@ height: 100vh;
     }
   }
 }
-
-    .chat {
+//where chat was
+.chat {
       flex: 2;
 
       // .chatInfo {
@@ -870,9 +870,22 @@ height: 100vh;
   }
 }
 
-
-.noChatId {
+.noChatWrapper {
   background-color: #36393e;
   height: 100vh;
   border-right: 1px solid rgb(91, 91, 91);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 }
+
+.noChatId {
+  font-weight: bold;
+  color: #000000;
+  background-color: #36393e;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
